@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: incident-postgres
+
+    environment:
+      POSTGRES_DB: incidentdb
+      POSTGRES_USER: incident
+      POSTGRES_PASSWORD: incident
+
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U incident -d incidentdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
