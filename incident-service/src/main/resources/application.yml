@@ -3,21 +3,30 @@ spring:
     name: incident-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/incidentdb
-    username: incident
-    password: incident
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     open-in-view: false
 
   flyway:
-    enabled: false
+    enabled: true
 
 server:
   port: 8081
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration-minutes: 60
+
+  bootstrap:
+    admin-email: ${BOOTSTRAP_ADMIN_EMAIL:}
+    admin-password: ${BOOTSTRAP_ADMIN_PASSWORD:}
 
 management:
   endpoints:
